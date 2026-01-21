@@ -2,10 +2,12 @@ from fastapi import FastAPI, Depends, HTTPException
 from models import Task, TaskCreate, TaskRead, UpdateTask
 from typing import List, Optional   #for type hints
 from sqlmodel import Session, select, delete    #MAKE SURE YOU IMPORT SELECT FROM SQLMODEL AND [NOT] SQLALCHEMY
-from database import get_session
+from database import get_session, init_db
 from sqlalchemy import func #to use SQL functions
 
 app = FastAPI()
+
+init_db()
 
 def get_all_tasks(session: Session):
     return session.exec(select(Task)).all()
